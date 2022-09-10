@@ -1,0 +1,22 @@
+header{
+    .header-wrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background: $DarkColor;
+        nav{
+            ul{
+                display: flex;
+                gap: 15px;
+                align-items: center;
+                li{
+                    list-style: none;
+                    cursor: pointer;
+                    font-family: $MainFont;
+                    color: white;
+                }
+            }
+        }
+    }
+}
