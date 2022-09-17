@@ -1,8 +1,34 @@
 import NextNProgress from "nextjs-progressbar";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
+import Loading from "../Components/Loading";
+import AuthActions from "../Firebase/AuthActions";
+import { setUserAction } from "../Redux/UserSlice";
 
 const UtilitiesProvider = ({ Pages }) => {
+    const { header, footer } = useSelector(s => s.GlobalVariables)
+    const { User } = useSelector(s => s.CurrentAuth)
+    const dispatch = useDispatch()
+
+    //RouteManagement
+    useEffect(() => {
+        
+    }, [])
+    
+    //User Management
+    useEffect(() => {
+        AuthActions.ProvideUser((user) => {
+            dispatch(setUserAction(user))
+        })
+    }, [])
+
+    if(User === false){
+        return <Loading />
+    }
+    
+
     return (
         <>
             <NextNProgress
@@ -15,9 +41,9 @@ const UtilitiesProvider = ({ Pages }) => {
                     showSpinner: false,
                 }}
             />
-            <Header />
+            {header && <Header />}
             {Pages}
-            <Footer />
+            {footer && <Footer />}
         </>
     );
 };
