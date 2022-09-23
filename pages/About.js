@@ -1,13 +1,14 @@
 import Head from "next/head";
+import FadePageWrapper from "../Components/FadePageWrapper";
 
 const About = () => {
     return (
-        <div>
+        <FadePageWrapper>
             <Head>
                 <title>About</title>
             </Head>
             About123
-        </div>
+        </FadePageWrapper>
     );
 };
 

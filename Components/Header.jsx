@@ -3,7 +3,6 @@ import Link from "next/link";
 import Logo from "../Assets/Logo.png"
 import { AnimatePresence, motion } from "framer-motion";
 import { HoverTapAnimation, PageAnimation } from "../Utilities/Animations";
-import { useState } from "react";
 import { AiOutlineAlignRight } from "react-icons/ai"
 import { SimpleRoutes } from "../Data/Routes";
 import { SidebarAnimations } from "../Data/Animations";
@@ -22,7 +21,7 @@ const Header = () => {
         <motion.header {...PageAnimation}>
             <div className="header-wrapper">
                 <div className="logo-part">
-                    <Image width={30} height={30} src={Logo} objectFit="cover" />
+                    <Image width={30} height={30} src={Logo} objectFit="cover" alt="Logo" />
                 </div>
                 <nav>
                     <ul>

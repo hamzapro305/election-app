@@ -1,0 +1,126 @@
+.GlobalMainButton {
+    background: linear-gradient(5.08deg, #131ef2 4.3%, #941cf0 117.19%);
+    border-radius: 50px;
+    padding: 15px 40px;
+    border: none;
+    outline: none;
+    font-family: $MainFont;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: capitalize;
+    img {
+        width: 75px;
+        height: 17px;
+        object-fit: cover;
+    }
+    @include responsive(sm) {
+        font-size: 12px;
+        padding: 10px 25px;
+    }
+}
+.GlobalDarkButton {
+    background: linear-gradient(5.08deg, #19103f 4.3%, #532da6 117.19%);
+    border-radius: 50px;
+    color: white;
+    font-family: $MainFont;
+    padding: 15px 40px;
+    cursor: pointer;
+    border: none;
+    text-transform: capitalize;
+    img {
+        width: 75px;
+        height: 17px;
+        object-fit: cover;
+    }
+    @include responsive(sm) {
+        font-size: 12px;
+        padding: 10px 25px;
+    }
+}
+
+.GlobalLightButton {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    @include responsive(sm) {
+        padding: 10px 25px;
+    }
+    p {
+        font-family: $MainFont;
+        font-style: normal;
+        font-weight: 600;
+        text-transform: capitalize;
+        font-size: 16px;
+        background: linear-gradient(
+            180deg,
+            rgba(19, 30, 242, 0.77) 0%,
+            rgba(102, 1, 180, 0.5313) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        img {
+            width: 75px;
+            height: 17px;
+            object-fit: cover;
+        }
+        @include responsive(sm) {
+            font-size: 12px;
+        }
+    }
+}
+
+.GlobalCheckBox {
+    background-color: white;
+    width: 80px;
+    height: 30px;
+    border-radius: 20px;
+    padding: 3px 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img{
+        width: 20px;
+    }
+    .ball {
+        width: 39px;
+        height: 25px;
+        border-radius: 85px;
+        background: rgba(80, 80, 80, 0.5);
+        &.on {
+            background: linear-gradient(5.08deg, #131ef2 4.3%, #941cf0 117.19%);
+        }
+    }
+}
+.GlobalSearchBox{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: $NormalColor;
+    input{
+        flex: 1;
+        padding: 5px 0;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        &::placeholder{
+            font-family: $MainFont;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            text-transform: capitalize;
+            color: rgba(80, 80, 80, 0.5);
+        }
+    }
+    button{
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+}

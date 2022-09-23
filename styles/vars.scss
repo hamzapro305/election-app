@@ -1,5 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+// Breakpoints Structure
+$custom-breakpoints: (
+    xs: (minSize: 0px, maxSize: 575px, maxContWidth: 0px, name: 'XS'), // vertical mobile layout
+    sm: (minSize: 576px, maxSize: 767px, maxContWidth: 719px, name: 'SM'), //horizontal mobile layout
+    md: (minSize: 768px, maxSize: 991px, maxContWidth: 720px, name: 'MD'), //ipad
+    lg: (minSize: 992px, maxSize: 1249px, maxContWidth: 960px, name: 'LG'), //ipad pro
+    xl: (minSize: 1250px, maxSize: 1499px, maxContWidth: 1250px, name: 'XL'),
+    max: (minSize: 1500px, maxSize: 0px, maxContWidth: 1201px, name: 'MAX')
+);
+@mixin responsive($breakpoint) { 
+    @if map-has-key($custom-breakpoints, $breakpoint) {
+        @media (max-width: #{map-get(map-get($custom-breakpoints, $breakpoint), maxSize)}) {
+          @content;
+        }
+    }
+    @else {
+        @warn "Breakpoint #{$breakpoint} does not exist. Check case sensitivity.";
+    }
+}
+
+
+// Variables 
+
 
 $HighDarkColor: #6b7355;
 $DarkColor: #a8a88b;
