@@ -1,12 +1,11 @@
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { setHeader } from "../Redux/GlobalVariableSlice"
+import FadePageWrapper from "Components/FadePageWrapper";
 
 const Vote = () => {
-  
-  return (
-    <div>Vote</div>
-  )
-}
+    return (
+        <FadePageWrapper>
+            <div>Vote</div>
+        </FadePageWrapper>
+    );
+};
 
-export default Vote
+export default Vote;

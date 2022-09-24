@@ -7,7 +7,6 @@ import AuthActions from "../Firebase/AuthActions";
 import { setUserAction } from "../Redux/UserSlice";
 import "react-toastify/dist/ReactToastify.css";
 import HSToast from "../Components/HSToast";
-import { AnimatePresence } from "framer-motion";
 
 const UtilitiesProvider = ({ Pages }) => {
     const { header, footer } = useSelector((s) => s.GlobalVariables);
@@ -31,13 +30,7 @@ const UtilitiesProvider = ({ Pages }) => {
     return (
         <>
             {header && <Header />}
-            <AnimatePresence
-                mode="wait"
-                presenceAffectsLayout
-                onExitComplete={() => window.scrollTo(0, 0)}
-            >
-                {Pages}
-            </AnimatePresence>
+            {Pages}
             {footer && <Footer />}
             <HSToast />
         </>

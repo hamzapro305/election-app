@@ -1,0 +1,6 @@
+.ApplyForCandidate{
+    background-color: $HighDarkColor;
+    @include responsive(md){
+        opacity: 0;
+    }
+}
