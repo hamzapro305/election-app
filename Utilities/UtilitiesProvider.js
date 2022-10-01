@@ -7,20 +7,36 @@ import AuthActions from "../Firebase/AuthActions";
 import { setUserAction } from "../Redux/UserSlice";
 import "react-toastify/dist/ReactToastify.css";
 import HSToast from "../Components/HSToast";
+import { useRouter } from "next/router";
+import CandidateAPI from "APIs/CandidateAPI";
+import { CandidateActions } from "Redux/CandidateSlice";
 
 const UtilitiesProvider = ({ Pages }) => {
+    const router = useRouter();
     const { header, footer } = useSelector((s) => s.GlobalVariables);
     const { User } = useSelector((s) => s.CurrentAuth);
+
     const dispatch = useDispatch();
 
-    //RouteManagement
-    useEffect(() => {}, []);
+    if (User === null && router.pathname !== "/Login") {
+        router.push("/Login");
+    }
 
     //User Management
     useEffect(() => {
-        AuthActions.ProvideUser((user) => {
-            dispatch(setUserAction(user));
+        AuthActions.ProvideUser((user) => dispatch(setUserAction(user)));
+    }, [dispatch]);
+
+    //Get Candidates Data
+    useEffect(() => {
+        let Unsubscribe;
+        CandidateAPI.getLiveCandidates((data, uns) => {
+            dispatch(CandidateActions.setCandidates(data));
+            Unsubscribe = uns;
         });
+        return () => {
+            Unsubscribe && Unsubscribe();
+        };
     }, [dispatch]);
 
     if (User === false) {

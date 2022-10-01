@@ -1,0 +1,34 @@
+.Login {
+    margin: 0 auto;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login-setup {
+        background-color: white;
+        border-radius: 1rem;
+        max-width: 600px;
+        width: auto;
+        padding: 20px;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        &.active {
+            cursor: unset;
+        }
+        .Button {
+            border-radius: 1rem;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-family: $MainFont;
+        }
+        .content-body{
+            .content{
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                font-family: $MainFont;
+            }
+        }
+    }
+}

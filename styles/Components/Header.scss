@@ -1,72 +1,92 @@
 header {
-  position: relative;
-  .header-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background: $DarkColor;
-    nav {
-      @media (max-width: 786px) {
-        display: none;
-      }
-      ul {
+    position: relative;
+    .header-wrapper {
         display: flex;
-        gap: 15px;
+        justify-content: space-between;
         align-items: center;
-        li {
-          list-style: none;
-          cursor: pointer;
-          font-family: $MainFont;
-          color: white;
-        }
-      }
-    }
-    .ham {
-      display: none;
-      @media (max-width: 786px) {
-        display: block;
-      }
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-    }
-  }
-  .sideBar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    background-color: white;
-    .head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      .ham {
-        display: none;
-        @media (max-width: 786px) {
-          display: block;
-        }
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-      }
-    }
-    .body {
-      nav {
-        ul {
-            gap: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          li{
-            list-style: none;
+        padding: 20px;
+        background: $DarkColor;
+        .logo-part {
             font-family: $MainFont;
-            cursor: pointer;
-          }
+            font-size: 25px;
+            font-weight: 500;
         }
-      }
+        nav {
+            @media (max-width: 786px) {
+                display: none;
+            }
+            ul {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+                li {
+                    list-style: none;
+                    cursor: pointer;
+                    font-family: $MainFont;
+                    color: white;
+                }
+                .User{
+                    display: flex;
+                    gap: 20px;
+                    align-items: center;
+                    font-family: $MainFont;
+                    color: black;
+                    font-size: 24px;
+                    .photo{
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+        .ham {
+            display: none;
+            @media (max-width: 786px) {
+                display: block;
+            }
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
     }
-  }
+    .sideBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        background-color: white;
+        z-index: 9099;
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            .ham {
+                display: none;
+                @media (max-width: 786px) {
+                    display: block;
+                }
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+            }
+        }
+        .body {
+            nav {
+                ul {
+                    gap: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    li {
+                        list-style: none;
+                        font-family: $MainFont;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
 }

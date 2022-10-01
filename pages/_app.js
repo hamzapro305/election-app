@@ -1,10 +1,14 @@
 import UtilitiesProvider from "../Utilities/UtilitiesProvider";
 import { Wrapper } from "../Redux/store";
 import NextNProgress from "nextjs-progressbar";
+import { Provider } from "react-redux";
 import { AnimatePresence } from "framer-motion";
 import "styles/Styles.scss";
+import { useRouter } from "next/router";
 
-const MyApp = ({ Component, pageProps, router }) => {
+const MyApp = ({ Component, ...rest }) => {
+    const { store, props } = Wrapper.useWrappedStore(rest);
+    const router = useRouter();
     return (
         <>
             <NextNProgress
@@ -15,18 +19,23 @@ const MyApp = ({ Component, pageProps, router }) => {
                     showSpinner: false,
                 }}
             />
-            <UtilitiesProvider
-                Pages={
-                    <AnimatePresence
-                        mode="wait"
-                        onExitComplete={() => window.scrollTo(0, 0)}
-                    >
-                        <Component {...pageProps} key={router.route} />
-                    </AnimatePresence>
-                }
-            />
+            <Provider store={store}>
+                <UtilitiesProvider
+                    Pages={
+                        <AnimatePresence
+                            mode="wait"
+                            onExitComplete={() => window.scrollTo(0, 0)}
+                        >
+                            <Component
+                                {...props.pageProps}
+                                key={router.route}
+                            />
+                        </AnimatePresence>
+                    }
+                />
+            </Provider>
         </>
     );
 };
 
-export default Wrapper.withRedux(MyApp);
+export default MyApp;

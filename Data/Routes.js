@@ -7,10 +7,6 @@ const SimpleRoutes = [
         name: "About",
         path: "/About",
     },
-    {
-        name: "Vote Now",
-        path: "/Vote",
-    },
 ];
 
 export { 

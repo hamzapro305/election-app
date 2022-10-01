@@ -1,0 +1,123 @@
+.Home {
+    padding: 20px;
+    .Candidates {
+        margin: 0px auto;
+        max-width: 1800px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        gap: 20px;
+        @include responsive(lg){
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        @include responsive(md){
+            grid-template-columns: 1fr 1fr;
+        }
+        @include responsive(xs){
+            grid-template-columns: 1fr;
+        }
+        .candidate {
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+                rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            cursor: pointer;
+            border-radius: 0.2rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            .overlay {
+                height: 100px;
+                width: 100%;
+            }
+            .seatNo{
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 8px;
+                font-family: $MainFont;
+                background-color: wheat;
+                border-radius: .2rem;
+                padding: 2px 5px;
+            }
+            .image {
+                margin-top: -80px;
+                position: relative;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .info{
+                padding: 10px;
+                text-align: center;
+                font-family: $MainFont;
+                .identity-wrap{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+                    .name{
+                        font-weight: bold;
+                    }
+                }
+                .desc{
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+    .ModalWrapper{
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 90px;
+        left: 0;
+        @include responsive(sm){
+            top: 71.75px;
+        }
+        background-color: rgba(0, 0, 0, 0.199);
+        .CandidatePreview{
+            padding: 20px;
+            background-color: white;
+            position: fixed;
+            top: 25vh;
+            left: 35vw;
+            width: 30vw;
+            height: 50vh;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            border-radius: .5rem;
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            @include responsive(sm){
+                top: 25vh;
+                left: 10vw;
+                width: 80vw;
+                height: 50vh;
+            }
+            .info{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                .image{
+                    position: relative;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                }
+                .name{
+                    font-family: $MainFont;
+                    font-weight: bold;
+                }
+            }
+            .content{
+                margin: 10px 0;
+                font-family: $MainFont;
+                font-size: 18px;
+                flex: 1;
+            }
+        }
+    }
+}

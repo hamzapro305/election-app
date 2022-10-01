@@ -1,6 +1,7 @@
 import CandidateAPI from "APIs/CandidateAPI";
 import { GlobalMainButton } from "Components/GlobalButtons";
 import { ErrorToast, SuccessToast } from "Components/HSToast";
+import Head from "next/head";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CandidateFormActions } from "Redux/CandidateFormSlice";
@@ -38,6 +39,9 @@ const ApplyForCandidate = () => {
 
     return (
         <div className="ApplyForCandidate">
+            <Head>
+                <title>UBIT - Apply For CR</title>
+            </Head>
             <div className="wrapper">
                 <input
                     type="text"

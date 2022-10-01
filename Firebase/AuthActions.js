@@ -1,4 +1,8 @@
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import {
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signInWithPopup,
+} from "firebase/auth";
 import { auth } from "./firebase";
 
 class AuthActions {
@@ -7,8 +11,7 @@ class AuthActions {
             try {
                 const googleProvider = new GoogleAuthProvider();
                 const USER = await signInWithPopup(auth, googleProvider);
-                res(true)
-
+                res(true);
             } catch (err) {
                 switch (err.code) {
                     case "auth/popup-closed-by-user":
@@ -28,10 +31,14 @@ class AuthActions {
         });
     }
 
-    ProvideUser(callBack){
+    ProvideUser(callBack) {
         onAuthStateChanged(auth, (user) => {
-            callBack(user)
-        })
+            if (user) {
+                callBack(user);
+            } else {
+                callBack(null);
+            }
+        });
     }
 }
 

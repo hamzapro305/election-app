@@ -7,6 +7,7 @@ const Slice = createSlice({
         seatNo: "",
         image: undefined,
         description: "",
+        status: "pending",
     },
     reducers: {
         setValue: (state, { payload }) => {
@@ -14,7 +15,7 @@ const Slice = createSlice({
         },
         setImage: (state, { payload }) => {
             state.image = payload;
-        }
+        },
     },
 });
 

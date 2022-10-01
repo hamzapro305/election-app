@@ -1,6 +1,6 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { db, storage } from "Firebase/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 class CandidateAPI {
@@ -24,6 +24,17 @@ class CandidateAPI {
                 rej(false);
             }
         });
+    }
+
+    async getLiveCandidates(callBack){
+        const colRef = collection(db, "CandidateRequests")
+        const q = query(colRef, where("status", "==", "accepted"))
+        const Unsubscribe = onSnapshot(q, (data) => {
+            callBack(
+                data.docs.map(x => ({...x.data(), id: x.id})),
+                Unsubscribe
+            )
+        })
     }
 
     async UploadCandidateImage(file) {
