@@ -6,13 +6,13 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 20px;
-        @include responsive(lg){
+        @include responsive(lg) {
             grid-template-columns: 1fr 1fr 1fr 1fr;
         }
-        @include responsive(md){
+        @include responsive(md) {
             grid-template-columns: 1fr 1fr;
         }
-        @include responsive(xs){
+        @include responsive(xs) {
             grid-template-columns: 1fr;
         }
         .candidate {
@@ -24,20 +24,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             position: relative;
             .overlay {
                 height: 100px;
                 width: 100%;
             }
-            .seatNo{
+            .seatNo {
                 position: absolute;
                 top: 10px;
                 left: 10px;
                 font-size: 8px;
                 font-family: $MainFont;
                 background-color: wheat;
-                border-radius: .2rem;
+                border-radius: 0.2rem;
                 padding: 2px 5px;
             }
             .image {
@@ -48,35 +48,31 @@
                 border-radius: 50%;
                 overflow: hidden;
             }
-            .info{
+            .info {
                 padding: 10px;
                 text-align: center;
                 font-family: $MainFont;
-                .identity-wrap{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 3px;
-                    .name{
-                        font-weight: bold;
-                    }
+                .name {
+                    font-weight: bold;
                 }
-                .desc{
+                .desc {
                     font-size: 12px;
+                    word-break: break-word;
                 }
             }
         }
     }
-    .ModalWrapper{
+    .ModalWrapper {
         position: fixed;
         width: 100vw;
         height: 100vh;
         top: 90px;
         left: 0;
-        @include responsive(sm){
+        @include responsive(sm) {
             top: 71.75px;
         }
         background-color: rgba(0, 0, 0, 0.199);
-        .CandidatePreview{
+        .CandidatePreview {
             padding: 20px;
             background-color: white;
             position: fixed;
@@ -84,35 +80,51 @@
             left: 35vw;
             width: 30vw;
             height: 50vh;
-            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-            border-radius: .5rem;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+                rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            border-radius: 0.5rem;
             z-index: 500;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            @include responsive(sm){
+            @include responsive(md) {
+                top: 25vh;
+                left: 20vw;
+                width: 60vw;
+                height: 50vh;
+            }
+            @include responsive(sm) {
                 top: 25vh;
                 left: 10vw;
                 width: 80vw;
                 height: 50vh;
             }
-            .info{
+            .info {
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                .image{
+                .image {
                     position: relative;
                     width: 50px;
                     height: 50px;
                     border-radius: 50%;
                     overflow: hidden;
                 }
-                .name{
+                .identity-wrap {
                     font-family: $MainFont;
-                    font-weight: bold;
+                    .name {
+                        font-weight: bold;
+                    }
+                    .seatNo {
+                        font-size: 12px;
+                    }
                 }
             }
-            .content{
+            .votes{
+                font-family: $MainFont;
+                margin-top: 20px;
+            }
+            .content {
                 margin: 10px 0;
                 font-family: $MainFont;
                 font-size: 18px;

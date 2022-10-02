@@ -4,13 +4,17 @@ const UserSlice = createSlice({
     name: "CurrentAuth",
     initialState: {
         User: false,
+        isVoteSubmitted: false,
     },
-    reducers:{
+    reducers: {
         setUserAction: (state, { payload }) => {
-            state.User = payload
-        }
-    }
-})
+            state.User = payload;
+        },
+        setIsVoteSubmitted: (state, { payload }) => {
+            state.isVoteSubmitted = payload;
+        },
+    },
+});
 
-export const { setUserAction } = UserSlice.actions;
-export default UserSlice.reducer
+export const userActions = UserSlice.actions;
+export default UserSlice.reducer;

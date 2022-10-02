@@ -5,11 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import FadePageWrapper from "../Components/FadePageWrapper";
 import { useState } from "react";
 import { GlobalLightButton } from "Components/GlobalButtons";
+import { VotesActions } from "Redux/VotesSlice";
+import VotesApi from "APIs/VotesApi";
+import { ErrorToast } from "Components/HSToast";
 
 const Home = () => {
     const Candidates = useSelector((s) => s.Candidate.Candidates);
     const [Selected, setSelected] = useState(null)
-    console.log(Selected)
     return (
         <FadePageWrapper>
             <motion.div layout className="Home" onClick={(e) => {
@@ -19,7 +21,7 @@ const Home = () => {
                     <title>Home</title>
                 </Head>
                 <motion.div layout className="Candidates">
-                    {Candidates &&
+                    {Candidates ?
                         Candidates.map((x, j) => (
                             <motion.div className="candidate" layout key={x.id} layoutId={x.id} onClick={(e) => {
                                 e.stopPropagation()
@@ -40,7 +42,7 @@ const Home = () => {
                                     <motion.div layout="position" className="desc" layoutId={x.id + "desc"}>{x.description}</motion.div>
                                 </div>
                             </motion.div>
-                        ))}
+                        )) : <LoadingComp />}
                 </motion.div>
                 <AnimatePresence>
                     {Selected && <CandidatePreview Selected={Selected} setSelected={setSelected}/>}
@@ -51,6 +53,24 @@ const Home = () => {
 };
 
 const CandidatePreview = ({ Selected, setSelected }) => {
+
+    const { User, isVoteSubmitted } = useSelector((s) => s.CurrentAuth);
+
+    const Votes = useSelector((s) => s.Votes.AllVotes);
+
+    const GetVotes = (id) => {
+        return (Votes.filter(x => x.to === id)).length
+    }
+
+    const SendVote = () => {
+        if(isVoteSubmitted) {
+            ErrorToast("Your Vote Has Been Submitted")
+            return;
+        }
+        if(User){
+            VotesApi.sendVote(User.uid, Selected.id, User.email)
+        }
+    }
 
     return <motion.div {...Backdrop} className="ModalWrapper" onClick={() => setSelected(null)}>
         <motion.div {...SelectedBlogAnimation} layoutId={Selected.id} className="CandidatePreview" onClick={e => e.stopPropagation()}>
@@ -64,14 +84,21 @@ const CandidatePreview = ({ Selected, setSelected }) => {
                     <motion.div className="seatNo" layout="position" layoutId={Selected.id + "" + Selected.seatNo}>Seat No: {Selected.seatNo}</motion.div>
                 </div>
             </div>
+            <div className="votes">Votes: {GetVotes(Selected.id)}</div>
             <div className="content">
                 <motion.div layout="position" className="desc" layoutId={Selected.id + "desc"}>{Selected.description}</motion.div>
             </div>
             <div className="Vote">
-                <GlobalLightButton Content="Vote Now" />
+                <GlobalLightButton Content={isVoteSubmitted ? "You Submitted Vote" : "Vote Now"} onClick={SendVote}/>
             </div>
         </motion.div>
     </motion.div>
+}
+
+const LoadingComp = () => {
+    return <div className="LoadingComp">
+        Loading Candidates...
+    </div>
 }
 
 export default Home;

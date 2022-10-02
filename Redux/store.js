@@ -4,6 +4,7 @@ import CandidateFormSlice from "./CandidateFormSlice";
 import CandidateSlice from "./CandidateSlice";
 import GlobalVariableSlice from "./GlobalVariableSlice";
 import UserSlice from "./UserSlice";
+import VotesSlice from "./VotesSlice";
 
 const makeStore = () =>
     configureStore({
@@ -12,6 +13,7 @@ const makeStore = () =>
             CurrentAuth: UserSlice,
             CandidateForm: CandidateFormSlice,
             Candidate: CandidateSlice,
+            Votes: VotesSlice,
         },
         middleware: (defaultMiddleware) =>
             defaultMiddleware({ serializableCheck: false }),

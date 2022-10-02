@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const Slice = createSlice({
     name: "Candidate",
     initialState: {
-        Candidates: [],
+        Candidates: null,
     },
     reducers: {
         setCandidates: (state, { payload }) => {

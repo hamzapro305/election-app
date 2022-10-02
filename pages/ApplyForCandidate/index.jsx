@@ -1,6 +1,8 @@
 import CandidateAPI from "APIs/CandidateAPI";
 import { GlobalMainButton } from "Components/GlobalButtons";
 import { ErrorToast, SuccessToast } from "Components/HSToast";
+import Loading from "Components/Loading";
+import Image from "next/future/image";
 import Head from "next/head";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +12,14 @@ const ApplyForCandidate = () => {
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const CandidateForm = useSelector((s) => s.CandidateForm);
-    const uid = useSelector((s) => s.CurrentAuth.User.uid);
-
     const dispatch = useDispatch()
+
+    const CandidateForm = useSelector((s) => s.CandidateForm);
+
+    const uid = useSelector((s) => s.CurrentAuth?.User?.uid);
+
+    if(!uid) return <Loading />
+
 
     const textHandler = ({ target }) => {
         dispatch(CandidateFormActions.setValue({name: target.name, value: target.value}))
@@ -77,7 +83,13 @@ const ApplyForCandidate = () => {
                 />
             </div>
             {
-                CandidateForm.image && <img src={ URL.createObjectURL( CandidateForm.image ) } alt="" />
+                CandidateForm.image && <div className="image" style={{
+                    position: "relative",
+                    width: "500px",
+                    height: "500px",
+                }}>
+                    <Image src={ URL.createObjectURL( CandidateForm.image ) } alt="" fill sizes="500px"/>
+                </div>
             }
             <GlobalMainButton onClick={Upload} Content="Upload" isLoading={isLoading}/>
         </div>
