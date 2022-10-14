@@ -4,14 +4,18 @@ const UserSlice = createSlice({
     name: "CurrentAuth",
     initialState: {
         User: false,
-        isVoteSubmitted: false,
+        isMaleVoteSubmitted: false,
+        isFemaleVoteSubmitted: false,
     },
     reducers: {
         setUserAction: (state, { payload }) => {
             state.User = payload;
         },
-        setIsVoteSubmitted: (state, { payload }) => {
-            state.isVoteSubmitted = payload;
+        setIsMaleVoteSubmitted: (state, { payload }) => {
+            state.isMaleVoteSubmitted = payload;
+        },
+        setIsFemaleVoteSubmitted: (state, { payload }) => {
+            state.isFemaleVoteSubmitted = payload;
         },
     },
 });

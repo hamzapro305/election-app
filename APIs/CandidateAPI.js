@@ -1,10 +1,24 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { db, storage } from "Firebase/firebase";
-import { collection, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 class CandidateAPI {
-    async UploadCandidate(uid, data) {
+    async getCandidateFormData(uid){
+        try {
+            const docRef = doc(db, "CandidateRequests", uid);
+            const Data = await getDoc(docRef)
+            if(Data.exists()){
+                return Data.data()
+            }else{
+                return null;
+            }
+        } catch (err) {
+            console.log(err)
+            return null;
+        }
+    }
+    UploadCandidate(uid, data) {
         console.log(uid)
         return new Promise(async (res, rej) => {
             const docRef = doc(db, "CandidateRequests", uid);

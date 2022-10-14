@@ -2,21 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-
 const firebaseConfig = {
-    apiKey: "AIzaSyBHa_vgfIwX1OKIJqXvYYrfHOWWhrDx9aM",
-
-    authDomain: "election-app-e9fcc.firebaseapp.com",
-
-    projectId: "election-app-e9fcc",
-
-    storageBucket: "election-app-e9fcc.appspot.com",
-
-    messagingSenderId: "908230620192",
-
-    appId: "1:908230620192:web:265eff42a9731da1017845",
-
-    measurementId: "G-5JPQ4WJZSJ",
+    apiKey: process.env.APP_API_KEY,
+    authDomain: process.env.APP_AUTH_DOMAIN,
+    projectId: process.env.APP_PROJECT_ID,
+    storageBucket: process.env.APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.APP_MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.APP_MEASUREMENT_ID
 };
 
 // Initialize Firebase

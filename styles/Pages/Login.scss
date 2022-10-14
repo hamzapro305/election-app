@@ -9,6 +9,8 @@
         border-radius: 1rem;
         max-width: 600px;
         width: auto;
+        position: relative;
+        z-index: 5000;
         padding: 20px;
         cursor: pointer;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -23,6 +25,9 @@
             font-family: $MainFont;
         }
         .content-body{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             .content{
                 display: flex;
                 flex-direction: column;

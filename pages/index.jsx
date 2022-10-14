@@ -5,13 +5,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import FadePageWrapper from "../Components/FadePageWrapper";
 import { useState } from "react";
 import { GlobalLightButton } from "Components/GlobalButtons";
-import { VotesActions } from "Redux/VotesSlice";
 import VotesApi from "APIs/VotesApi";
 import { ErrorToast } from "Components/HSToast";
+import Loading from "Components/Loading";
 
 const Home = () => {
+
     const Candidates = useSelector((s) => s.Candidate.Candidates);
+
     const [Selected, setSelected] = useState(null)
+
+    const { User, isMaleVoteSubmitted, isFemaleVoteSubmitted } = useSelector((s) => s.CurrentAuth);
+
+    if(!User) return <Loading />
+    
     return (
         <FadePageWrapper>
             <motion.div layout className="Home" onClick={(e) => {
@@ -20,28 +27,19 @@ const Home = () => {
                 <Head>
                     <title>Home</title>
                 </Head>
-                <motion.div layout className="Candidates">
+                <div className="main-title MF">Male Candidates {isMaleVoteSubmitted ? `(Vote Submitted)` : ""}</div>
+                <motion.div layout className="Male-Candidates Candidates">
                     {Candidates ?
-                        Candidates.map((x, j) => (
-                            <motion.div className="candidate" layout key={x.id} layoutId={x.id} onClick={(e) => {
-                                e.stopPropagation()
-                                setSelected(x)
-                            }}> 
-                                <div
-                                    className="overlay"
-                                    style={{
-                                        backgroundColor: Colors[j],
-                                    }}
-                                />
-                                <motion.div className="seatNo" layout="position" layoutId={x.id + "" + x.seatNo}>Seat No: {x.seatNo}</motion.div>
-                                <motion.div className="image" layoutId={x.id + "image"}>
-                                    <Image src={x.image} fill alt="" sizes="50px" />
-                                </motion.div>
-                                <div className="info">
-                                    <motion.div layout="position" className="name" layoutId={x.id + "name"}>{x.name}</motion.div>
-                                    <motion.div layout="position" className="desc" layoutId={x.id + "desc"}>{x.description}</motion.div>
-                                </div>
-                            </motion.div>
+                        Candidates.filter(x => x.gender === "male").map((x, j) => (
+                            <Candidate key={x.id} candidate={x} rand={j} setSelected={setSelected}/>
+                        )) : <LoadingComp />}
+                </motion.div>
+
+                <div className="main-title MF">Female Candidates {isFemaleVoteSubmitted ? `(Vote Submitted)` : ""}</div>
+                <motion.div layout className="Female-Candidates Candidates">
+                    {Candidates ?
+                        Candidates.filter(x => x.gender === "female").map((x, j) => (
+                            <Candidate key={x.id} candidate={x} rand={j} setSelected={setSelected}/>
                         )) : <LoadingComp />}
                 </motion.div>
                 <AnimatePresence>
@@ -52,27 +50,71 @@ const Home = () => {
     );
 };
 
+const Candidate = ({ candidate, rand, setSelected }) => (
+    <motion.div className="candidate" layout layoutId={candidate.id} onClick={(e) => {
+        e.stopPropagation()
+        setSelected(candidate)
+    }}> 
+        <div
+            className="overlay"
+            style={{
+                backgroundColor: Colors[rand],
+            }}
+        />
+        <motion.div className="seatNo" layout="position" layoutId={candidate.id + "" + candidate.seatNo}>Seat No: {candidate.seatNo}</motion.div>
+        <motion.div className="image" layoutId={candidate.id + "image"}>
+            <Image src={candidate.image} fill alt="" sizes="50px" />
+        </motion.div>
+        <div className="info">
+            <motion.div layout="position" className="name" layoutId={candidate.id + "name"}>{candidate.name}</motion.div>
+            <motion.div layout="position" className="desc" layoutId={candidate.id + "desc"}>{candidate.description.slice(0, 100)}...</motion.div>
+        </div>
+    </motion.div>
+)
+
 const CandidatePreview = ({ Selected, setSelected }) => {
 
-    const { User, isVoteSubmitted } = useSelector((s) => s.CurrentAuth);
+    const { User, isMaleVoteSubmitted, isFemaleVoteSubmitted } = useSelector((s) => s.CurrentAuth);
 
     const Votes = useSelector((s) => s.Votes.AllVotes);
 
     const GetVotes = (id) => {
-        return (Votes.filter(x => x.to === id)).length
+        if(Selected.gender === "male") return (Votes.filter(x => x.toMale === id)).length
+        if(Selected.gender === "female") return (Votes.filter(x => x.toFemale === id)).length
+        else return 0
+    }
+
+    const isSubmitted = (gender) => {
+        if(gender === "male") {
+            if(isMaleVoteSubmitted){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        if(gender === "female") {
+            if(isFemaleVoteSubmitted){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 
     const SendVote = () => {
-        if(isVoteSubmitted) {
-            ErrorToast("Your Vote Has Been Submitted")
-            return;
-        }
-        if(User){
-            VotesApi.sendVote(User.uid, Selected.id, User.email)
-        }
+            const { id, gender } = Selected
+            if(isSubmitted(gender)){
+                ErrorToast("Your Vote Has Been Submitted")
+                return;
+            }
+            if(User){
+                VotesApi.sendVote(User.uid, id, User.email, gender)
+                setSelected(null)
+            }
     }
 
-    return <motion.div {...Backdrop} className="ModalWrapper" onClick={() => setSelected(null)}>
+    return <>
+    <motion.div {...Backdrop} className="ModalWrapper" onClick={() => setSelected(null)}>
         <motion.div {...SelectedBlogAnimation} layoutId={Selected.id} className="CandidatePreview" onClick={e => e.stopPropagation()}>
             <div className="head"></div>
             <div className="info">
@@ -89,10 +131,11 @@ const CandidatePreview = ({ Selected, setSelected }) => {
                 <motion.div layout="position" className="desc" layoutId={Selected.id + "desc"}>{Selected.description}</motion.div>
             </div>
             <div className="Vote">
-                <GlobalLightButton Content={isVoteSubmitted ? "You Submitted Vote" : "Vote Now"} onClick={SendVote}/>
+                <GlobalLightButton Content={isSubmitted(Selected.gender) ? "You Submitted Vote" : "Vote Now"} onClick={SendVote}/>
             </div>
         </motion.div>
     </motion.div>
+    </>
 }
 
 const LoadingComp = () => {
@@ -102,9 +145,6 @@ const LoadingComp = () => {
 }
 
 export default Home;
-
-const randomIntFromInterval = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
 
 const Colors = [
     "#34568B",

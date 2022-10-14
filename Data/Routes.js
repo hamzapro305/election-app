@@ -3,12 +3,19 @@ const SimpleRoutes = [
         name: "Home",
         path: "/",
     },
-    {
-        name: "About",
-        path: "/About",
-    },
 ];
 
-export { 
-    SimpleRoutes
-}
+const AllRoutes = [
+    {
+        name: "Home",
+        path: "/",
+    },
+    {
+        name: "Apply For Candidate",
+        path: "/ApplyForCandidate",
+    },
+]
+
+const Routes = (status) => status ? AllRoutes : SimpleRoutes
+
+export { Routes };

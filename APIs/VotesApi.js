@@ -2,13 +2,23 @@ import { db } from "Firebase/firebase";
 import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 
 class VotesAPI {
-    async sendVote(uid, CandidateID, email) {
+    async sendVote(uid, CandidateID, email, voteTo) {
         const docRef = doc(db, "votes", uid);
-        const data = {
-            from: uid,
-            to: CandidateID,
-            email,
-        };
+        let data;
+        if(voteTo == "male"){
+            data = {
+                from: uid,
+                toMale: CandidateID,
+                email,
+            };
+        }
+        if(voteTo == "female"){
+            data = {
+                from: uid,
+                toFemale: CandidateID,
+                email,
+            };
+        }
         await setDoc(docRef, data, { merge: true });
     }
     getVotes(callBack) {

@@ -1,6 +1,51 @@
-.ApplyForCandidate{
-    background-color: $HighDarkColor;
-    @include responsive(md){
-        opacity: 0;
+.ApplyForCandidate {
+    .wrapper {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .Modal {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            padding: 20px;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 991px;
+            margin: 0 auto;
+            width: 100%;
+            .input{
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                .actions{
+                    display: flex;
+                    gap: 10px;
+                    button{
+                        padding: 4px;
+                        border: none;
+                        border-radius: 0;
+                        cursor: pointer;
+                        border-radius: .1rem;
+                        &.active{
+                            background-color: $HighDarkColor;
+                            color: white;
+                        }
+                    }
+                }
+                textarea{
+                    resize: none;
+                }
+                input, textarea{
+                    padding: 3px 10px;
+                    font-family: $MainFont;
+                    outline: none;
+                }
+                .selected-image{
+                    width: 100%;
+                    height: 200px;
+                }
+            }
+        }
     }
 }

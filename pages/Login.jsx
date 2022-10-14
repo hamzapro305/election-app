@@ -52,12 +52,12 @@ const Login = () => {
                                         Class
                                     </p>
                                     <p>OtherWise Your Vote Will Not Be Count</p>
-                                    <GlobalLightButton
-                                        Content="Sign In"
-                                        onClick={SignIn}
-                                        isLoading={isLoading}
-                                    />
                                 </div>
+                                <GlobalLightButton
+                                    Content="Sign In"
+                                    onClick={SignIn}
+                                    isLoading={isLoading}
+                                />
                             </motion.div>
                         )}
                     </AnimatePresence>

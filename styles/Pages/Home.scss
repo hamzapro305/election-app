@@ -1,11 +1,22 @@
 .Home {
     padding: 20px;
+    .main-title{
+        font-weight: bold;
+        font-size: 40px;
+        padding-bottom: 20px;
+        margin: 0px auto;
+        max-width: 1800px;
+        @include responsive(sm){
+            text-align: center;
+        }
+    }
     .Candidates {
         margin: 0px auto;
         max-width: 1800px;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 20px;
+        padding-bottom: 20px;
         @include responsive(lg) {
             grid-template-columns: 1fr 1fr 1fr 1fr;
         }
@@ -66,20 +77,16 @@
         position: fixed;
         width: 100vw;
         height: 100vh;
-        top: 90px;
+        top: 0;
         left: 0;
-        @include responsive(sm) {
-            top: 71.75px;
-        }
         background-color: rgba(0, 0, 0, 0.199);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .CandidatePreview {
             padding: 20px;
             background-color: white;
-            position: fixed;
-            top: 25vh;
-            left: 35vw;
             width: 30vw;
-            height: 50vh;
             box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
                 rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
             border-radius: 0.5rem;
@@ -88,16 +95,10 @@
             flex-direction: column;
             justify-content: space-between;
             @include responsive(md) {
-                top: 25vh;
-                left: 20vw;
                 width: 60vw;
-                height: 50vh;
             }
             @include responsive(sm) {
-                top: 25vh;
-                left: 10vw;
                 width: 80vw;
-                height: 50vh;
             }
             .info {
                 display: flex;

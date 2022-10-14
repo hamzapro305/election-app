@@ -4,7 +4,7 @@ import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import Loading from "../Components/Loading";
 import AuthActions from "../Firebase/AuthActions";
-import { userActions } from "../Redux/UserSlice";
+import UserSlice, { userActions } from "../Redux/UserSlice";
 import "react-toastify/dist/ReactToastify.css";
 import HSToast from "../Components/HSToast";
 import { useRouter } from "next/router";
@@ -45,16 +45,14 @@ const UtilitiesProvider = ({ Pages }) => {
     // Check For Vote Submission
     useEffect(() => {
         if (User) {
-            let check = false;
-            for (let i = 0; i < Votes.length; i++) {
-                if(Votes[i].email === User.email){
-                    check = true;
-                    break
-                }
-            }
-            dispatch(
-                userActions.setIsVoteSubmitted(check)
-            )
+            const MyVote = Votes.filter(x => x.from === User.uid)[0]
+
+            if(!!MyVote?.toMale) {
+                dispatch(userActions.setIsMaleVoteSubmitted(true))
+            }else dispatch(userActions.setIsMaleVoteSubmitted(false))
+            if(!!MyVote?.toFemale) {
+                dispatch(userActions.setIsFemaleVoteSubmitted(true))
+            }else dispatch(userActions.setIsFemaleVoteSubmitted(false))
         }
     }, [User, Votes, dispatch]);
 

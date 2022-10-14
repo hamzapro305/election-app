@@ -2,6 +2,7 @@ import {
     GoogleAuthProvider,
     onAuthStateChanged,
     signInWithPopup,
+    signOut,
 } from "firebase/auth";
 import { auth } from "./firebase";
 
@@ -29,6 +30,16 @@ class AuthActions {
                 }
             }
         });
+    }
+
+    async SignOutUser() {
+        try {
+            const res = await signOut(auth)
+            return res;
+        } catch (error) {
+            console.log(error)
+            return null;
+        }
     }
 
     ProvideUser(callBack) {

@@ -3,10 +3,11 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { HoverTapAnimation, PageAnimation } from "../Utilities/Animations";
 import { AiOutlineAlignRight } from "react-icons/ai";
-import { SimpleRoutes } from "../Data/Routes";
+import { Routes } from "../Data/Routes";
 import { SidebarAnimations } from "../Data/Animations";
 import { useDispatch, useSelector } from "react-redux";
 import { setHamSideBar } from "../Redux/GlobalVariableSlice";
+import AuthActions from "Firebase/AuthActions";
 
 const Header = () => {
 
@@ -17,6 +18,11 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const setSideBar = (callback) => dispatch(setHamSideBar(callback(HamSideBar)))
+
+    const Logout = () => {
+        AuthActions.SignOutUser()
+        if(HamSideBar) setSideBar(x => false)
+    }
     
     return (
         <motion.header>
@@ -24,7 +30,7 @@ const Header = () => {
                 <div className="logo-part">UBIT</div>
                 <nav>
                     <ul>
-                        {SimpleRoutes.map((route) => {
+                        {Routes(!!User).map((route) => {
                             return (
                                 <Link href={route.path} key={route.path}>
                                     <motion.li
@@ -36,6 +42,9 @@ const Header = () => {
                                 </Link>
                             );
                         })}
+                        {User && <motion.li onClick={Logout} {...HoverTapAnimation}className="route" >
+                            Logout
+                        </motion.li>}
                         {User && (
                             <div className="User">
                                 <div className="name">{User.displayName}</div>
@@ -92,7 +101,7 @@ const Header = () => {
                             <div className="body">
                                 <nav>
                                     <ul>
-                                        {SimpleRoutes.map((route) => {
+                                        {Routes(!!User).map((route) => {
                                             return (
                                                 <div
                                                     key={route.path}
@@ -111,6 +120,9 @@ const Header = () => {
                                                 </div>
                                             );
                                         })}
+                                        {User && <motion.li onClick={Logout} {...HoverTapAnimation}className="route" >
+                                            Logout
+                                        </motion.li>}
                                     </ul>
                                 </nav>
                             </div>
