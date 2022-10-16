@@ -6,20 +6,26 @@ const GlobalVariableSlice = createSlice({
         header: true,
         footer: true,
         HamSideBar: false,
+        realTime: {
+            canApply: null,
+            canVote: null,
+        },
     },
     reducers: {
-            setHeader: (state, { payload }) => {
-                state.header = payload;
-            },
-            setFooter: (state, { payload }) => {
-                state.footer = payload;
-            },
-            setHamSideBar: (state, { payload }) => {
-                state.HamSideBar = payload;
-            },
+        setHeader: (state, { payload }) => {
+            state.header = payload;
+        },
+        setFooter: (state, { payload }) => {
+            state.footer = payload;
+        },
+        setHamSideBar: (state, { payload }) => {
+            state.HamSideBar = payload;
+        },
+        setRealTime: (state, { payload }) => {
+            state.realTime = payload;
+        },
     },
 });
 
-export const { setHeader, setFooter, setHamSideBar } =
-  GlobalVariableSlice.actions;
+export const GlobalVariableActions = GlobalVariableSlice.actions;
 export default GlobalVariableSlice.reducer;

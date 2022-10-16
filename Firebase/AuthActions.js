@@ -4,7 +4,8 @@ import {
     signInWithPopup,
     signOut,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import { auth, db } from "./firebase";
 
 class AuthActions {
     async signInWithGoogle() {
@@ -32,12 +33,19 @@ class AuthActions {
         });
     }
 
+    getGlobalVariables(callBack) {
+        const docRef = doc(db, "GlobalVariables", "vars");
+        const unSubscribe = onSnapshot(docRef, (doc) => {
+            callBack(doc.data(), unSubscribe);
+        });
+    }
+
     async SignOutUser() {
         try {
-            const res = await signOut(auth)
+            const res = await signOut(auth);
             return res;
         } catch (error) {
-            console.log(error)
+            console.log(error);
             return null;
         }
     }

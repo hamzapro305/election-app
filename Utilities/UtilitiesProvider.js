@@ -12,6 +12,7 @@ import CandidateAPI from "APIs/CandidateAPI";
 import { CandidateActions } from "Redux/CandidateSlice";
 import VotesApi from "APIs/VotesApi";
 import { VotesActions } from "Redux/VotesSlice";
+import { GlobalVariableActions } from "Redux/GlobalVariableSlice";
 
 const UtilitiesProvider = ({ Pages }) => {
     const router = useRouter();
@@ -37,6 +38,20 @@ const UtilitiesProvider = ({ Pages }) => {
             dispatch(CandidateActions.setCandidates(data));
             Unsubscribe = uns;
         });
+        return () => {
+            Unsubscribe && Unsubscribe();
+        };
+    }, [dispatch]);
+
+    // Get GlobalVariables
+    useEffect(() => {
+        let Unsubscribe;
+        AuthActions.getGlobalVariables((Data, uns) => {
+            dispatch(
+                GlobalVariableActions.setRealTime(Data)
+            )
+            Unsubscribe = uns
+        })
         return () => {
             Unsubscribe && Unsubscribe();
         };

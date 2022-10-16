@@ -3,21 +3,38 @@ import Head from "next/head";
 import { useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import FadePageWrapper from "../Components/FadePageWrapper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GlobalLightButton } from "Components/GlobalButtons";
 import VotesApi from "APIs/VotesApi";
-import { ErrorToast } from "Components/HSToast";
+import { ErrorToast, WarnToast } from "Components/HSToast";
 import Loading from "Components/Loading";
+import { useRouter } from "next/router";
 
 const Home = () => {
 
     const Candidates = useSelector((s) => s.Candidate.Candidates);
 
+    const canVote = useSelector(s => s.GlobalVariables.realTime.canVote)
+
     const [Selected, setSelected] = useState(null)
 
     const { User, isMaleVoteSubmitted, isFemaleVoteSubmitted } = useSelector((s) => s.CurrentAuth);
 
-    if(!User) return <Loading />
+    const router = useRouter()
+
+    useEffect(() => {
+      if(canVote === false){
+        WarnToast("Vote Limit Exceed")
+      }
+    }, [canVote])
+    
+
+    if(!User || !Candidates || canVote === null) return <Loading /> 
+
+    if(canVote === false){
+        router.push("/ApplyForCandidate")
+    }
+
     
     return (
         <FadePageWrapper>

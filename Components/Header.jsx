@@ -1,13 +1,13 @@
 import Image from "next/future/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { HoverTapAnimation, PageAnimation } from "../Utilities/Animations";
+import { HoverTapAnimation } from "../Utilities/Animations";
 import { AiOutlineAlignRight } from "react-icons/ai";
 import { Routes } from "../Data/Routes";
 import { SidebarAnimations } from "../Data/Animations";
 import { useDispatch, useSelector } from "react-redux";
-import { setHamSideBar } from "../Redux/GlobalVariableSlice";
 import AuthActions from "Firebase/AuthActions";
+import { GlobalVariableActions } from "Redux/GlobalVariableSlice";
 
 const Header = () => {
 
@@ -17,7 +17,7 @@ const Header = () => {
 
     const dispatch = useDispatch();
 
-    const setSideBar = (callback) => dispatch(setHamSideBar(callback(HamSideBar)))
+    const setSideBar = (callback) => dispatch(GlobalVariableActions.setHamSideBar(callback(HamSideBar)))
 
     const Logout = () => {
         AuthActions.SignOutUser()

@@ -16,6 +16,8 @@ const ApplyForCandidate = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const canApply = useSelector(s => s.GlobalVariables.realTime.canApply)
+
     const dispatch = useDispatch();
 
     const router = useRouter()
@@ -26,11 +28,16 @@ const ApplyForCandidate = () => {
 
     const uid = useSelector((s) => s.CurrentAuth?.User?.uid);
 
+    useEffect(() => {
+        if(canApply === false){
+          WarnToast("Application Limit Exceed")
+        }
+      }, [canApply])
+
 
     useEffect(() => {
         const getData = async (UID) => {
             try {
-                WarnToast("Loading Form")
                 const Data = await CandidateAPI.getCandidateFormData(UID)
                 if (Data) {
                     dispatch(
@@ -44,16 +51,17 @@ const ApplyForCandidate = () => {
                     )
                     setStatus(Data.status)
                 }
-                SuccessToast("Form Loaded")
             } catch (error) {
                 console.log(error)
             }
+            SuccessToast("Form Loaded")
         }
         if(uid) getData(uid)
     }, [dispatch, uid])
 
+    if (!uid || canApply === null) return <Loading />;
 
-    if (!uid) return <Loading />;
+    if(canApply === false) router.push("/")
 
     const textHandler = ({ target }) => {
         dispatch(
@@ -63,6 +71,11 @@ const ApplyForCandidate = () => {
             })
         );
     };
+
+    if(status === "accepted") {
+        WarnToast("You Can't Change Your Info Anymore")
+        return <FormSubmitted  CandidateForm={CandidateForm} />
+    }
 
     const setGender = (Gender) => {
         dispatch(
@@ -194,5 +207,11 @@ const ApplyForCandidate = () => {
         </div>
     );
 };
+
+const FormSubmitted = () => {
+    return <div className="FormSubmitted">
+        
+    </div>
+}
 
 export default ApplyForCandidate;
