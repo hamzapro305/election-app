@@ -19,13 +19,16 @@ class CandidateAPI {
         }
     }
     UploadCandidate(uid, data) {
-        console.log(uid)
         return new Promise(async (res, rej) => {
             const docRef = doc(db, "CandidateRequests", uid);
             try {
                 let image;
                 if(typeof data.image !== "string"){
-                    image = await this.UploadCandidateImage(data.image)
+                    if(data.image){
+                        image = await this.UploadCandidateImage(data.image)
+                    }else{
+                        image = ""
+                    }
                 }else{
                     image = data.image
                 }

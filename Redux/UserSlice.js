@@ -6,8 +6,12 @@ const UserSlice = createSlice({
         User: false,
         isMaleVoteSubmitted: false,
         isFemaleVoteSubmitted: false,
+        isEmailSubmitted: null,
     },
     reducers: {
+        setIsEmailSubmitted: (state, { payload }) => {
+            state.isEmailSubmitted = payload;
+        },
         setUserAction: (state, { payload }) => {
             state.User = payload;
         },

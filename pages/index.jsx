@@ -6,9 +6,10 @@ import FadePageWrapper from "../Components/FadePageWrapper";
 import { useEffect, useState } from "react";
 import { GlobalLightButton } from "Components/GlobalButtons";
 import VotesApi from "APIs/VotesApi";
-import { ErrorToast, WarnToast } from "Components/HSToast";
+import { ErrorToast } from "Components/HSToast";
 import Loading from "Components/Loading";
 import { useRouter } from "next/router";
+import DEFAULT_AVATAR from "Assets/DEFAULT_AVATAR.jpg"
 
 const Home = () => {
 
@@ -76,7 +77,7 @@ const Candidate = ({ candidate, rand, setSelected }) => (
         />
         <motion.div className="seatNo" layout="position" layoutId={candidate.id + "" + candidate.seatNo}>Seat No: {candidate.seatNo}</motion.div>
         <motion.div className="image" layoutId={candidate.id + "image"}>
-            <Image src={candidate.image} fill alt="" sizes="50px" />
+            <Image src={!!candidate.image ? candidate.image : DEFAULT_AVATAR} fill alt="" sizes="50px" />
         </motion.div>
         <div className="info">
             <motion.div layout="position" className="name" layoutId={candidate.id + "name"}>{candidate.name}</motion.div>
@@ -132,7 +133,7 @@ const CandidatePreview = ({ Selected, setSelected }) => {
             <div className="head"></div>
             <div className="info">
                 <motion.div className="image" layoutId={Selected.id + "image"}>
-                    <Image src={Selected.image} fill alt="" sizes="50px" />
+                    <Image src={!!Selected.image ? Selected.image : DEFAULT_AVATAR} fill alt="" sizes="50px" />
                 </motion.div>
                 <div className="identity-wrap">
                     <motion.div layout="position" className="name" layoutId={Selected.id + "name"}>{Selected.name}</motion.div>

@@ -13,18 +13,36 @@ import { CandidateActions } from "Redux/CandidateSlice";
 import VotesApi from "APIs/VotesApi";
 import { VotesActions } from "Redux/VotesSlice";
 import { GlobalVariableActions } from "Redux/GlobalVariableSlice";
+import UserNotVerified from "Components/UserNotVerified";
 
 const UtilitiesProvider = ({ Pages }) => {
+
     const router = useRouter();
+
     const { header, footer } = useSelector((s) => s.GlobalVariables);
-    const { User } = useSelector((s) => s.CurrentAuth);
+
+    const { User, isEmailSubmitted } = useSelector((s) => s.CurrentAuth);
+
     const Votes = useSelector((s) => s.Votes.AllVotes);
+
+    const RequiredEmails = useSelector((s) => s.Votes.RequiredEmails);
+
 
     const dispatch = useDispatch();
 
     if (User === null && router.pathname !== "/Login") {
         router.push("/Login");
     }
+
+    // Email Verification
+    useEffect(() => {
+        if(User){
+            const MY_EMAIL = User?.email?.toLowerCase()
+            const result = RequiredEmails.filter(x => x.toLowerCase() === MY_EMAIL)
+            if(result.length === 1) dispatch(userActions.setIsEmailSubmitted(true))
+            else dispatch(userActions.setIsEmailSubmitted(false))
+        }
+    }, [User, RequiredEmails, dispatch])
 
     //User Management
     useEffect(() => {
@@ -83,7 +101,12 @@ const UtilitiesProvider = ({ Pages }) => {
         };
     }, [dispatch]);
 
-    if (User === false) {
+    if(isEmailSubmitted === false){
+        console.log(isEmailSubmitted)
+        return <UserNotVerified />
+    }
+
+    if (User === false || isEmailSubmitted === null) {
         return <Loading />;
     }
 
