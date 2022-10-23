@@ -12,7 +12,7 @@ import { CandidateFormActions } from "Redux/CandidateFormSlice";
 
 const ApplyForCandidate = () => {
 
-    const [status, setStatus]= useState("null")
+    const [status, setStatus]= useState("empty")
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,9 +30,9 @@ const ApplyForCandidate = () => {
 
     useEffect(() => {
         if(canApply === false){
-          WarnToast("Application Limit Exceed")
+          router.push("/")
         }
-      }, [canApply])
+      }, [canApply, router])
 
 
     useEffect(() => {
@@ -50,18 +50,17 @@ const ApplyForCandidate = () => {
                         })
                     )
                     setStatus(Data.status)
+                }else{
+                    setStatus("null")
                 }
             } catch (error) {
                 console.log(error)
             }
-            SuccessToast("Form Loaded")
         }
         if(uid) getData(uid)
     }, [dispatch, uid])
 
-    if (!uid || canApply === null) return <Loading />;
-
-    if(canApply === false) router.push("/")
+    if (!uid || canApply === null || status === "empty") return <Loading />;
 
     const textHandler = ({ target }) => {
         dispatch(
@@ -72,9 +71,8 @@ const ApplyForCandidate = () => {
         );
     };
 
-    if(status === "accepted") {
-        WarnToast("You Can't Change Your Info Anymore")
-        return <FormSubmitted  CandidateForm={CandidateForm} />
+    if(status !== "null") {
+        return <FormSubmitted status={status} setStatus={setStatus} CandidateForm={CandidateForm} />
     }
 
     const setGender = (Gender) => {
@@ -208,10 +206,16 @@ const ApplyForCandidate = () => {
     );
 };
 
-const FormSubmitted = () => {
-    return <div className="FormSubmitted">
-        
+const FormSubmitted = ({ status, setStatus }) => {
+    const STATUS = status === "accepted"
+    return <>
+    <div className="FormSubmitted">
+        <div className="wrapper-inner">
+            <div className="desc MF">{STATUS ? "Your Form Accepted!" : "Your Form is Submitted"}</div>
+            {!STATUS && <GlobalMainButton Content="Edit Form" onClick={() => setStatus("null")}/>}
+        </div>
     </div>
+    </>
 }
 
 export default ApplyForCandidate;

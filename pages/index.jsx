@@ -24,16 +24,12 @@ const Home = () => {
 
     useEffect(() => {
       if(canVote === false){
-        WarnToast("Vote Limit Exceed")
+        router.push("/ApplyForCandidate")
       }
-    }, [canVote])
+    }, [canVote, router])
     
 
     if(!User || !Candidates || canVote === null) return <Loading /> 
-
-    if(canVote === false){
-        router.push("/ApplyForCandidate")
-    }
 
     
     return (
